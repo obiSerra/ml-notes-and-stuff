@@ -53,6 +53,7 @@ Values are any decimal between 0 and 1; this will give the vector an extra dimen
       + remove rare words
       + treating the common word pairs as a single word
       + Negative sampling: only update the weight for the word you are analysing instead of all the weights in the NN
++ [[https://nlp.stanford.edu/projects/glove/][GloVe]] is an unsupervised learning algorithm that combines both those methods
 
 
 
