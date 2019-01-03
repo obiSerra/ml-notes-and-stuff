@@ -1,0 +1,62 @@
+[[https://monkeylearn.com/blog/word-embeddings-transform-text-numbers/][Word embeddings: how to transform text into numbers]]
+
+* one-hot encoding
+
+Create a vector with the size of the vocabulary and 0 for each word and 1 for the current word
+
+eg:
+V => Monkey, Ape and Banana
+--------------------
+Monkey => [1, 0, 0]
+Ape => [0, 1, 0]
+Banana => [0, 0, 1]
+
+Cons:
+ + cannot underline similarities between sentencies/words
+ + cannot help understanding the context of a word
+
+* Dense vectors
+Ideally we want vector representations where similar vectors end up with similar vectors ==>
+Values are any decimal between 0 and 1; this will give the vector an extra dimension: the amount of numbers
+[[https://arxiv.org/abs/1301.3781][Word2Vec]] can better rappresent all those information in a vector
+
+* Goals and evaluation metrics
+
++ Explicit methods
+  + Human evaluation
+  + Syntactic analogies
+    + mathematical operation on vectors and then analyse the most similar vector: "eat is to eating as run is to __"
+  + Semantic analogies
+    + similar to syntactic analogies but like "monkey is to animal as banana is to __"
++ Implicit methods
+  + use word vectors in NLP tasks and measure their impact
+
+* How are word vectors created?
++ Statistical method
+  + create a co-occurence matrix: set a window size N (usually between 2 and 10) and go through all the text and count how many times each pair of two words are separated by as many as N words.
+  + can have problem with frequently occuring words
+  + can be computataionally intensive
+  + can have many negative values (when two words not co-occur) that can be caused by an insufficient amount of text
++ Predictive method
+  + training a ML algorithm to make prediction based on the word in their context
+  + the neural network is trained to get better in that task, but we don't care about the result: all we want are the weights of the matrix representing the words
+  + Word2Vec is a particularly good example
+    + removed the hidden layer of the NN -> less learning power but more speed
+    + trained on huge amount of data
+    + two variant of training:
+      + Continuous Bag of Words (CBOW):
+        + The basic idea here is to set a sliding window of size N let say N is 2. Then you take a huge amount of text and train a neural network to predict a word inputting the N words at each side.
+      + Skipgram
+        + Almost the same as CBOW but instead of predicting the word in the middle given all the others, you train to predict all the others given the one in the middle
+    + other proposed optimization given by word2vec:
+      + give more weight to the closer words in the window
+      + remove rare words
+      + treating the common word pairs as a single word
+      + Negative sampling: only update the weight for the word you are analysing instead of all the weights in the NN
+
+
+
+* Conclusion
+
++ Word vectors are context dependent, they are created learning from text
++ word vectors are really good when used in transfer learning
