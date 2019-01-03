@@ -1,0 +1,91 @@
+https://web.stanford.edu/~jurafsky/NLPCourseraSlides.html
+https://www.youtube.com/watch?v=jhSdB36RYWk&list=PLoROMvodv4rOFZnDyrlW3-nI7tMLtmiJZ&index=7
+
+* Intro
+
+  + NLP is hard because ambiguity
+  + To solve NL problems we need
+    + Knowledge about languages
+    + knowledge about the world
+    + a way to combine knowledge sources
+  + we generally do this by building probabilistic models build from language data
+
+
+* Basic Text Processing
+
+** Regex
+
+   + regex play a large role in text processing
+     + regex are used as features in for calssifiers
+   + [] is called disjunction
+   + [^...] is a negation
+   + ? refers to previous char or group
+   + * and + are called kleene operators (for Stephen C. Kleene)
+   + ^ and $ (as start/end) are called anchors
+
+
+ + Errors
+   + Type I error -> false positive
+   + Type II error -> false negative
+   + Reducing the error rate often involves 2 antagonistic efforts:
+     + Increasing accuracy or precision (minimizing false positives)
+     + Increasing coverage or recall (minimizing false negatives)
+
+
+** Word tokenization
+
++ other than standard words there are "fragments" (part of words in spoken language) and "filled pauses" (uh ...)
++ lemma -> cat and cats are the same lemma
++ type -> an element of the vocabulary
+  + V = vocabulary = set of types
+  + |V| = the size of the vocabulary
++ token -> an instance of that type in running text
+  + N = number of tokens
+
+
+`tr -sc 'A-Za-z' '\n' < text.txt` ==> transform every letter that is not 'A-Za-z' into '\n'
+`tr -sc 'A-Za-z' '\n' < text.txt | sort | uniq -c` ==> `uniq -c` count the occurence of every unique letter
+`tr 'A-Z' 'a-z' < text.txt | tr -sc 'A-Za-z' '\n' | sort | uniq -c | sort -n -r` ==> replace capital letters with normal letters and sort by their frequency
+
+
+Problems with tokenization:
++ 's
++ I'm, isn't
++ Hewlett-Packard / state-of-the-art
++ San Francisco -> how many tokens?
++ lowercase/lower case/ lower-case
++ m.p.h, PHD -> periods and acronymous
+
+in other languages:
+
++ un'altra/ una altra...
++ in german noun compunds are not segmented
++ in Chinese and Japanese there are no spaces between words
++ multiple alphabets (for japanese) etc...
+
+** Word normalization
+
+For information retrieval indexed text & query terms must have same form
++ implicitly define equivalence classes of terms (eg: deleting periods in a terms,  U.S.A. to match USA)
++ asymmetric expansion (window -> window, windows, Window, Windows; but Windows -> only Windows -for MS Windows-)
+
+Depending on the need, narmalization can be different (eg. US vs us can be very different)
+
+Lemmatization:
++ am, are, is -> be
++ car, cars, car's, cars' -> car
++ the boy's cars are different colors -> the boy car be different color
+
+Morphemes: the small meaningful units that make up words
++ Stems: the core meaning-bearing units
++ affixes: bits and pieces that adhere to stems (often with grammatical functions)
+
+Stemming -> reduce terms to their stems (chopping of affixes)
+
+Porter's algorithm is the most common English stemmer; it is a simple set of replacement rules
+
+** Sentence Segmentation
++ ! and ? are relatively unambiguous
++ . is quite ambiguous
+
++ we can use a binary classifier understantig when a sentence ends (eg. a Decision Tree)

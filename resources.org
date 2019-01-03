@@ -1,0 +1,14 @@
+* NLP
+
+** Resources
+
++ [[https://github.com/bentrevett/pytorch-sentiment-analysis][pytorch-sentiment-analysis]]
+  + tutorial
+  + jupyter notebook
+  + pytorch
++ [[https://monkeylearn.com/blog/word-embeddings-transform-text-numbers/][Word embeddings: how to transform text into numbers]]
+  + word embedding insight
++ [[https://github.com/Shujian2015/FreeML][FreeML]]
+  + a collection of resources (mostly free) on ML and data science
++ [[https://github.com/zalandoresearch/flair][Flair]]
+  + A very simple framework for state-of-the-art NLP. Developed by Zalando Research.
