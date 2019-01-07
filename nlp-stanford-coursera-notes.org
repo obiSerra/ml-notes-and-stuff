@@ -31,7 +31,6 @@ https://www.youtube.com/watch?v=jhSdB36RYWk&list=PLoROMvodv4rOFZnDyrlW3-nI7tMLtm
      + Increasing accuracy or precision (minimizing false positives)
      + Increasing coverage or recall (minimizing false negatives)
 
-
 ** Word tokenization
 
 + other than standard words there are "fragments" (part of words in spoken language) and "filled pauses" (uh ...)
@@ -89,3 +88,25 @@ Porter's algorithm is the most common English stemmer; it is a simple set of rep
 + . is quite ambiguous
 
 + we can use a binary classifier understantig when a sentence ends (eg. a Decision Tree)
+
+
+
+* Minimum Edit Distance
+
+** Defining Minimum Edit Distance
+
+it is used to measure how similar are two strings
+
+The minimum edit distance between two strings is the minimum of editing operation (insertion, deletion, substitution) needed to transform one into the other
+
+Each operation can have cost 1 or other (substitution costs 2 in Levenshtein distance)
+
+** Calculate Minimum Edit Distance
+
+To calculate it we have:
++ initial state: the word/sentence we are transforming
++ operators: insert, delete, substitute
++ goal state: the word/sentence we are trying to get to
++ path cost: the number of edits that we want to minimize
+
+** Computing alignement

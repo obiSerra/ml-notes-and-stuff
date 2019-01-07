@@ -1,8 +1,10 @@
+ [[https://github.com/bentrevett/pytorch-sentiment-analysis][pytorch-sentiment-analysis]]
+
 * 1 - Simple Sentiment Analysis
 
 Use a RNN (Recurring Neural Network) as they are commonly used in analysing sequences.
 
-A RNN takes in sequence of words, X = {x1, ... xT}, one at a time and produces a hidden state (h) for each word. 
+A RNN takes in sequence of words, X = {x1, ... xT}, one at a time and produces a hidden state (h) for each word.
 The RNN is used recurrenty, by feeding in the current word (xt) as well as the hidden state of the previous word (ht-1) to produce the next hidden state (ht)
 Once we have our final hidden state (hT), we feed it through a linear layer (f) - also known as a fully connected layer - to receive our predict sentiment
 
@@ -31,10 +33,10 @@ Building the model we need to define the layers
 
 The `embedding layer` is used to transform our sparse one-hot vector (sparse as most of the elements are 0) into a dense embedding vector; it is a fully connected layer
 The `RNN layer` is our RNN which takes our dense vector and the previous hidden state to calculate the next hidden state
-The `linear layer` takes the final hidden state and feeds it through a fully connected layer transforming it to the correct output dimension 
+The `linear layer` takes the final hidden state and feeds it through a fully connected layer transforming it to the correct output dimension
 
 each batch x is a tensor of size [sentence length, batch size]. That is a batch of sentences, each having each word converted into a one-hot vector
-the inout batch is then passed through the embedding layer to get `embedded`, which gives us a dense vector representation of our sentences. 
+the inout batch is then passed through the embedding layer to get `embedded`, which gives us a dense vector representation of our sentences.
 `embedded` is a tensor of size [sentence length, batch size, embedded dim]
 `embedded` is then feed into the RNN
 the RNN returns 2 tensors, `output` of size [sentence length, batch size, hidden dim] and `hidden` of size [1, batch size, hidden dim]
@@ -42,10 +44,30 @@ the RNN returns 2 tensors, `output` of size [sentence length, batch size, hidden
 `hidden` is simply the final hidden state
 
 
-* 2 - Updated Sentiment Analysis 
+* 2 - Updated Sentiment Analysis
 
 Different RNN Architecture called Long Short-Term Memory (LSTM)
 Standard RNN suffers from the vanishing gradient problem; LSTM has an extra recurrent state called a `cell` (a sort of memory)
 LSTM is a function of xt, ht and ct instead of just xt and ht
 
 Bidirectional RNN: having a RNN to process the words from first to last (forward RNN)and a second one to process the words from last to first (backward RNN)
+
+Multi-layer RNN (deep RNN): add an addition RNN on top of the initial standard RNN where each RNN added is another layer.
+The hidden state of the first (bottom) at time-step t will be the input of the RNN above at time step t. The prediction is then made from the final (hightest) layer
+
+Regularization: to avoid overfitting we will use dropout: randomly dropping out (set to 0) neurons in a layer during a forward pass.
+One theory about why dropout works is that a model with parameters dropped out can be seen as a "weaker" (less parametrized) model.
+The prediction from all these weaker models are then averaged together within the parameters of the model.
+
+
+`Adam` train optimizer adapts the learning rate for each parameter, giving parameters that are update more fequently lower learning rates
+
+* 3 - Faster Sentiment Analysis
+
+Using the FastText model from the paper  [[https://arxiv.org/pdf/1607.01759.pdf][Bag of Tricks for Efficient Text Classification]]
+
+Calculate the n-grams of an input sentence and append them at the end of a sentence: eg: in the sentence "how are you ?", the bi-grams are: "how are", "are you" and "you ?".
+
+The model we are going to use have no RNN component
+
+....
